@@ -2,11 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './app-root/app.component';
+import { UnloggedLayoutComponent } from './unlogged/layout/layout.component';
+import { LoggedLayoutComponent } from './logged/layout/layout.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
