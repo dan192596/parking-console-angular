@@ -3,9 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app-root/app.component';
-import { UnloggedLayoutComponent } from './unlogged/layout/layout.component';
-import { LoggedLayoutComponent } from './logged/layout/layout.component';
-
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,12 @@ import { LoggedLayoutComponent } from './logged/layout/layout.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule
+  ],
+  exports:[
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

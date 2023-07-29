@@ -1,12 +1,23 @@
 <div class="screen__content">      
-    <form class="login">
+    <form  [formGroup]="myForm" (ngSubmit)="onSubmit()" class="login" autocomplete="off" >
         <div class="login__field">
             <i class="login__icon fas fa-user"></i>
-            <input type="text" class="login__input" placeholder="Correo electrónico">
+            <input 
+                class="form-control login__input"    
+                type="text" 
+                formControlName="username"
+                placeholder="Correo electrónico"
+            >
         </div>
         <div class="login__field">
             <i class="login__icon fas fa-lock"></i>
-            <input type="password" class="login__input" placeholder="Contraseña">
+            <input 
+                [type]="hide ? 'password' : 'text'"
+                class="form-control login__input" 
+                placeholder="Contraseña"
+                formControlName="password"
+            >
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </div>
         <button class="button login__submit">
             <span class="button__text">Ingresar</span>
