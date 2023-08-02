@@ -1,3 +1,76 @@
 <div class="container">	
-	<router-outlet></router-outlet>
+	<div class="area"></div><nav class="main-menu">
+		<ul>
+			<li>
+				<a routerLink="/dashboard">
+					<div class="fa">
+						<mat-icon >home</mat-icon>
+					</div>
+					<span class="nav-text">
+					Dashboard
+					</span>
+				</a>
+			
+			</li>
+			<li class="has-subnav">
+				<a routerLink="/parking">
+					<div class="fa">
+						<mat-icon >garage_home</mat-icon>
+					</div>
+					
+					<span class="nav-text">
+						Parqueos
+					</span>
+				</a>
+				
+			</li>
+			<li class="has-subnav">
+				<a routerLink="/reservation">
+					<div class="fa">
+						<mat-icon >edit_document</mat-icon>
+					</div>
+					<span class="nav-text">
+						Reservas
+					</span>
+				</a>
+				
+			</li>
+			<li class="has-subnav">
+				<a routerLink="payment">
+					<div class="fa">
+						<mat-icon >payments</mat-icon>
+					</div>
+					<span class="nav-text">
+						Pagos
+					</span>
+				</a>
+			
+			</li>
+			<li>
+				<a routerLink="/documentation">				
+					<div class="fa">
+						<mat-icon >emoji_objects</mat-icon>
+					</div>
+					<span class="nav-text">
+						Documentation
+					</span>
+				</a>
+			</li>
+		</ul>
+
+		<ul class="logout">
+			<li>
+			<a href="#">
+					<i class="fa fa-power-off fa-2x"></i>
+					<span class="nav-text">
+						Salir
+					</span>
+				</a>
+			</li>  
+		</ul>
+	</nav>
+	<div class="content">
+		<router-outlet></router-outlet>
+	</div>
+	
 </div>
