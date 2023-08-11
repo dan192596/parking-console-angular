@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   domain: 'localhost',
-  protocol: 'https://',
+  protocol: 'http://',
   consoleAuth: {//Console-Dev    
     aws_project_region: 'us-east-2',
     aws_cognito_identity_pool_id: 'arn:aws:cognito-idp:us-east-2:129340444638:userpool/us-east-2_x36iLZPWv',
