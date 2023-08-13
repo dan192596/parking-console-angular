@@ -48,14 +48,9 @@ export class ParkingComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     const data = new Map<string, string>();
-    // data.set('index', this.paginator.pageIndex.toString());
-    // data.set('items', this.paginator.pageSize.toString());
-    // data.set('sort', ((this.sort.active !== null && this.sort.active !== undefined && this.sort.active !== '') ? this.sort.active : 'id'));
-    // data.set('direction', ((this.sort.direction !== null && this.sort.direction !== undefined && this.sort.direction !== '') ? this.sort.direction.toUpperCase() : 'DESC'));
-
     data.set('index', '0');
     data.set('items', '5'); 
-    this.callService('0', '5', true /*, 'id', 'DESC'*/);
+    this.callService('0', '5', true);
   }
 
   search(): void{
@@ -85,8 +80,7 @@ export class ParkingComponent implements OnInit {
     const data = new Map<string, string>();
     data.set('index', index);
     data.set('items', items);
-    console.log(this.userService.getData())
-    data.set('user', '6');
+    data.set('user', this.userService.getData()['id']);
     if(search!=''){
       data.set('search', search);
     }
@@ -94,7 +88,6 @@ export class ParkingComponent implements OnInit {
     this.restService.getWithParams(REST.service.console, 'parking', data).subscribe(
       (response:any) => {
         this.loading = false;
-        console.table(response);
         this.dataSource = new MatTableDataSource(response['data']);
         if(initial){
           this.dataSource.paginator = this.paginator;

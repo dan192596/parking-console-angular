@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/app-service/user.service';
 
 @Component({
   selector: 'logged-app-layout',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoggedLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private userService:UserService,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  salir(): void{
+    this.userService.deleteUserData()
+    location.reload();
   }
 
 }

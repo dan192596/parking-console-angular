@@ -40,7 +40,7 @@ export class RestManagerService {
      * @param method metodo a invocar
      * @param id id del objeto que se desea obtener
      */
-    public getObjectById(rest: string, controller: string, id: number) {
+    public getObjectById(rest: string, controller: string, id: string) {
         const headers = new HttpHeaders(this.customHeaders('json'));
         return this.http.get(rest + controller + '/' + id.toString(), { headers });
     }

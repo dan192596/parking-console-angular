@@ -1,1 +1,59 @@
-<p>payment works!</p>
+<mat-expansion-panel class="mat-elevation-z3 search-expandable" >
+    <mat-expansion-panel-header >
+        <mat-panel-title>
+            <h3 class="search-expandable-title">Búsqueda</h3>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+  
+    <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="20px">
+      <form [formGroup]="myForm" (ngSubmit)="search()" autocomplete="off">
+        <div fxFlex="50%" fxLayout="column">
+          <mat-form-field >
+              <mat-label>Nombre de lugar</mat-label>
+              <input matInput formControlName="searchFormField" >
+          </mat-form-field>          
+          <button class="btn-filter"> Filtrar</button>
+        </div>
+      </form>      
+    </div>
+  </mat-expansion-panel>
+  
+  <div style="margin-top: 15px;">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table" matSort>
+  
+      <!-- Id Column -->
+      <ng-container matColumnDef="id" class="mat-column-position">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-name"> Id. </th>
+        <td mat-cell *matCellDef="let element" class="mat-column-body"> {{element.id}} </td>
+      </ng-container>
+  
+      <!-- Total Column -->
+      <ng-container matColumnDef="total" class="mat-column-position">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-name"> Total </th>
+        <td mat-cell *matCellDef="let element" class="mat-column-body"> {{element.total}} </td>
+      </ng-container>
+  
+      <!-- Id Reservacion Column -->
+      <ng-container matColumnDef="reservation" class="mat-column-position">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-name"> Id Reservación </th>
+        <td mat-cell *matCellDef="let element" class="mat-column-body"> {{element.reservation}} </td>
+      </ng-container>
+  
+      <!-- Client Column -->
+      <ng-container matColumnDef="client" class="mat-column-position">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-name"> Id Cliente </th>
+        <td mat-cell *matCellDef="let element" class="mat-column-body"> {{element.client}} </td>
+      </ng-container>
+  
+      <!-- Status Column -->
+      <ng-container matColumnDef="status" class="mat-column-position">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-name"> Estado </th>
+        <td mat-cell *matCellDef="let element" class="mat-column-body"> {{element.status.description}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="length" (page)="changePage()"></mat-paginator>
+  </div>

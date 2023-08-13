@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { AmplifyService } from '../../app-service/amplify.service';
 import { UserService } from '../../app-service/user.service';
 import swal from'sweetalert2';
+import { RestManagerService } from 'src/app/app-service/rest-manager.service';
+import { REST } from 'src/app/app-service/rest-connections.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,8 @@ export class LoginComponent {
 
   constructor( private fb: FormBuilder,
               private amplify: AmplifyService,
-              private userService:UserService
+              private userService:UserService,
+              private restService: RestManagerService,
               ) {}
 
   onSubmit():void{
@@ -35,9 +38,18 @@ export class LoginComponent {
         this.myForm.value['password']).then(ampUser => {
           try{
             const userId: string = ampUser.attributes['custom:uuid'];
-            this.userService.setUserData('{}', userId);
-            //swal.fire('Bienvenido', '', 'success');
-            location.reload();
+            this.restService.getObjectById(REST.service.console, '/user/login', userId).subscribe(
+            (response:any) => {
+              if(response!=null && response['status']['id']==1){
+                this.userService.setUserData(response, userId);
+                location.reload();
+              }else{
+                swal.fire('Acceso invalido', 'Valida tus credenciales', 'error');
+              }             
+            }, (error:string) => {
+              console.error(JSON.stringify(error));
+              swal.fire('Acceso invalido', 'Valida tus credenciales', 'error');
+            });
           }catch(e){
             swal.fire('Acceso invalido', 'Valida tus credenciales', 'error');
           }
@@ -45,16 +57,4 @@ export class LoginComponent {
           swal.fire('Advertencia', 'No se pudo realizar login.', 'warning')
         });
   }
-
-  // getFormValidationErrors() {
-  //   Object.keys(this.myForm.controls).forEach(key => {
-  //     const controlErrors: ValidationErrors = this.myForm.get(key)!.errors!;
-  //     if (controlErrors != null) {
-  //       Object.keys(controlErrors).forEach(keyError => {
-  //        console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-  //       });
-  //     }
-  //   });
-  // }
-
 }
