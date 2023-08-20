@@ -19,7 +19,7 @@ export class PaymentComponent implements OnInit {
     searchFormField: ['', [ ]]
   });
 
-  displayedColumns: string[] = ['id', 'total', 'reservation', 'client', 'status'];
+  displayedColumns: string[] = ['id', 'total', 'reservation', 'client', 'status', 'actions'];
   dataSource: MatTableDataSource<PaymentInterface> = new MatTableDataSource();
 
   title: string = "";

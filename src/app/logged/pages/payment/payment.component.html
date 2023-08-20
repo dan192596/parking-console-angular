@@ -1,7 +1,15 @@
+<div  fxLayout="column">
+  <mat-label class="title">Mis pagos</mat-label>
+  <button mat-button class="btn-search" [routerLink]="['/payment/create']">
+    <span>Nuevo</span>
+    <mat-icon>add_circle</mat-icon>
+  </button>
+</div>
+
 <mat-expansion-panel class="mat-elevation-z3 search-expandable" >
     <mat-expansion-panel-header >
         <mat-panel-title>
-            <h3 class="search-expandable-title">Búsqueda</h3>
+            <mat-label class="search-expandable-title">Búsqueda</mat-label>
         </mat-panel-title>
     </mat-expansion-panel-header>
   
@@ -49,6 +57,21 @@
       <ng-container matColumnDef="status" class="mat-column-position">
         <th mat-header-cell *matHeaderCellDef class="mat-column-name"> Estado </th>
         <td mat-cell *matCellDef="let element" class="mat-column-body"> {{element.status.description}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let data">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+              <button mat-menu-item [routerLink]="['/payment/detail']" [queryParams]="{id: data.id}">
+                  <mat-icon>info</mat-icon>
+                  <span>Ver</span>
+              </button>
+          </mat-menu>
+        </td>
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

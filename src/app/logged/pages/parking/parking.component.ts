@@ -21,7 +21,7 @@ export class ParkingComponent implements OnInit {
     searchFormField: ['', [ ]]
   });
 
-  displayedColumns: string[] = ['id', 'name', 'location', 'latitude', 'longitude', 'price', 'status'];
+  displayedColumns: string[] = ['id', 'name', 'location', 'latitude', 'longitude', 'price', 'status', 'actions'];
   dataSource: MatTableDataSource<ParkingInterface> = new MatTableDataSource();
 
   

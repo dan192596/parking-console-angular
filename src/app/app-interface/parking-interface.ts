@@ -6,5 +6,6 @@ export interface ParkingInterface {
     latitude: number;
     longitude: number;
     priceHour: number;
-    status: StatusInterface
+    status: StatusInterface,
+    name: string;
 }

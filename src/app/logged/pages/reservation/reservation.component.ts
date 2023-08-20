@@ -19,7 +19,7 @@ export class ReservationComponent implements OnInit {
     searchFormField: ['', [ ]]
   });
 
-  displayedColumns: string[] = ['id', 'start', 'end', 'parking', 'vehicle', 'status'];
+  displayedColumns: string[] = ['id', 'start', 'end', 'parking', 'vehicle', 'status', 'actions'];
   dataSource: MatTableDataSource<ReservationInterface> = new MatTableDataSource();
 
   title: string = "";
