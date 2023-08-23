@@ -42,7 +42,7 @@ export class RestManagerService {
      */
     public getObjectById(rest: string, controller: string, id: string) {
         const headers = new HttpHeaders(this.customHeaders('json'));
-        return this.http.get(rest + controller + '/' + id.toString(), { headers });
+        return this.http.get(rest+'/' + controller + '/' + id, { headers });
     }
 
     /**
