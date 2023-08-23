@@ -75,7 +75,7 @@ export class ReservationComponent implements OnInit {
     const data = new Map<string, string>();
     data.set('index', index);
     data.set('items', items);
-    data.set('user', this.userService.getData()['id']);
+    data.set('owner', this.userService.getData()['id']);
     if(search!=''){
       data.set('search', search);
     }
