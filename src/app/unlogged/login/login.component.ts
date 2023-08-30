@@ -38,7 +38,7 @@ export class LoginComponent {
         this.myForm.value['password']).then(ampUser => {
           try{
             const userId: string = ampUser.attributes['custom:uuid'];
-            this.restService.getObjectById(REST.service.console, '/user/login', userId).subscribe(
+            this.restService.getObjectById(REST.service.console, 'user/login', userId).subscribe(
             (response:any) => {
               if(response!=null && response['status']['id']==1){
                 this.userService.setUserData(response, userId);

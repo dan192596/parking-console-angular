@@ -1,9 +1,9 @@
 <div  fxLayout="column">
-  <mat-label class="title">Mis reservaciones</mat-label>
-  <button mat-button class="btn-search" [routerLink]="['/reservation/create']">
+  <mat-label class="title" style="margin-bottom: 2%;">Mis reservaciones</mat-label>
+  <!-- <button mat-button class="btn-search" [routerLink]="['/reservation/create']">
     <span>Nuevo</span>
     <mat-icon>add_circle</mat-icon>
-  </button>
+  </button> -->
 </div>
 
 <mat-expansion-panel class="mat-elevation-z3 search-expandable" >
@@ -17,7 +17,7 @@
       <form [formGroup]="myForm" (ngSubmit)="search()" autocomplete="off">
         <div fxFlex="50%" fxLayout="column">
           <mat-form-field >
-              <mat-label>Nombre de lugar</mat-label>
+              <mat-label>Placa del vehiculo</mat-label>
               <input matInput formControlName="searchFormField" >
           </mat-form-field>          
           <button class="btn-filter"> Filtrar</button>
@@ -76,14 +76,14 @@
                   <mat-icon>info</mat-icon>
                   <span>Ver</span>
               </button>
-              <button *ngIf="data.status.id != 2" mat-menu-item [routerLink]="['/reservation/delete']" [queryParams]="{id: data.id}">
+              <button *ngIf="data.status.id == 3" mat-menu-item [routerLink]="['/reservation/delete']" [queryParams]="{id: data.id}">
                   <mat-icon>delete</mat-icon>
                   <span>Desactivar</span>
               </button>
-              <button *ngIf="data.status.id == 2" mat-menu-item [routerLink]="['/reservation/restore']" [queryParams]="{id: data.id}">
+              <!-- <button *ngIf="data.status.id == 2" mat-menu-item [routerLink]="['/reservation/restore']" [queryParams]="{id: data.id}">
                   <mat-icon>restore</mat-icon>
                   <span>Reactivar</span>
-              </button>
+              </button> -->
           </mat-menu>
         </td>
       </ng-container>

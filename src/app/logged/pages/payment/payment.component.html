@@ -1,9 +1,9 @@
 <div  fxLayout="column">
-  <mat-label class="title">Mis pagos</mat-label>
-  <button mat-button class="btn-search" [routerLink]="['/payment/create']">
+  <mat-label class="title" style="margin-bottom: 2%;">Mis pagos</mat-label>
+  <!-- <button mat-button class="btn-search" [routerLink]="['/payment/create']">
     <span>Nuevo</span>
     <mat-icon>add_circle</mat-icon>
-  </button>
+  </button> -->
 </div>
 
 <mat-expansion-panel class="mat-elevation-z3 search-expandable" >
@@ -17,7 +17,7 @@
       <form [formGroup]="myForm" (ngSubmit)="search()" autocomplete="off">
         <div fxFlex="50%" fxLayout="column">
           <mat-form-field >
-              <mat-label>Nombre de lugar</mat-label>
+              <mat-label>Id de reservación</mat-label>
               <input matInput formControlName="searchFormField" >
           </mat-form-field>          
           <button class="btn-filter"> Filtrar</button>

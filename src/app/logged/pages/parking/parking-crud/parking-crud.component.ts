@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { REST } from 'src/app/app-service/rest-connections.service';
 import { RestManagerService } from 'src/app/app-service/rest-manager.service';
 import { Maintenance } from 'src/app/behavior/maitenance';
 import { ParkingInterface } from '../../../../app-interface/parking-interface';
+import { UserService } from 'src/app/app-service/user.service';
 
 @Component({
   selector: 'app-parking-crud',
@@ -26,6 +27,8 @@ export class ParkingCrudComponent extends Maintenance implements OnInit{
     private fb: FormBuilder,
     public route: ActivatedRoute,
     private restService: RestManagerService,
+    private userService: UserService,
+    private router: Router
   ) {    
     super();
     this.title = this.route.snapshot.data['title'];
@@ -38,7 +41,7 @@ export class ParkingCrudComponent extends Maintenance implements OnInit{
         }
       );
     }
-    console.log("El currentId es"+this.currentId)
+    
     this.initialize();
   }
 
@@ -46,17 +49,98 @@ export class ParkingCrudComponent extends Maintenance implements OnInit{
   ngOnInit(): void {
   }
 
+  getForm(){
+    return {
+      location: this.myForm.value['location'],
+      latitude: this.myForm.value['latitude'],
+      longitude: this.myForm.value['longitude'],
+      priceHour: this.myForm.value['priceHour'],
+      name: this.myForm.value['name'],
+      owner: this.userService.getData()['id']
+    }
+  }
+
   create(): void {
-    console.log("Soy crear");
+    this.loading = true;
+    this.restService.insertObject(REST.service.console, 'parking', this.getForm()).subscribe(
+      (response) => {
+        const parking = (response as ParkingInterface);
+        this.myForm.setValue({
+          location: parking.location,
+          latitude: parking.latitude,
+          longitude: parking.longitude,
+          priceHour : parking.priceHour,
+          status: parking.status.description,
+          name: parking.name
+        });
+        this.loading = false;
+        this.router.navigate(['parking']);
+      }, error => {
+        this.loading = false;
+        console.error(JSON.stringify(error));
+      });
   }
+
   update(): void {
-    console.log("Soy actualizar");
+    this.loading = true;
+    this.restService.editObjectById(REST.service.console, 'parking', this.currentId.toString(), this.getForm()).subscribe(
+      (response) => {
+        const parking = (response as ParkingInterface);
+        this.myForm.setValue({
+          location: parking.location,
+          latitude: parking.latitude,
+          longitude: parking.longitude,
+          priceHour : parking.priceHour,
+          status: parking.status.description,
+          name: parking.name
+        });
+        this.loading = false;
+        this.router.navigate(['parking']);
+      }, error => {
+        this.loading = false;
+        console.error(JSON.stringify(error));
+      });
   }
+
   delete(): void {
-    console.log("Soy borrar");
+    this.loading = true;
+    this.restService.deleteObjectById(REST.service.console, 'parking', this.currentId.toString()).subscribe(
+      (response) => {
+        const parking = (response as ParkingInterface);
+        this.myForm.setValue({
+          location: parking.location,
+          latitude: parking.latitude,
+          longitude: parking.longitude,
+          priceHour : parking.priceHour,
+          status: parking.status.description,
+          name: parking.name
+        });
+        this.loading = false;
+        this.router.navigate(['parking']);
+      }, error => {
+        this.loading = false;
+        console.error(JSON.stringify(error));
+      });
   }
   restore(): void {
-    console.log("Soy restaurar");
+    this.loading = true;
+    this.restService.restoreObjectById(REST.service.console, 'parking', this.currentId.toString()).subscribe(
+      (response) => {
+        const parking = (response as ParkingInterface);
+        this.myForm.setValue({
+          location: parking.location,
+          latitude: parking.latitude,
+          longitude: parking.longitude,
+          priceHour : parking.priceHour,
+          status: parking.status.description,
+          name: parking.name
+        });
+        this.loading = false;
+        this.router.navigate(['parking']);
+      }, error => {
+        this.loading = false;
+        console.error(JSON.stringify(error));
+      });
   }
   
   disableForm(): void {

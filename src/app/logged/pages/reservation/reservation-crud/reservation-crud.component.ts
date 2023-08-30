@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RestManagerService } from 'src/app/app-service/rest-manager.service';
 import { Maintenance } from '../../../../behavior/maitenance';
+import { REST } from 'src/app/app-service/rest-connections.service';
+import { ReservationInterface } from 'src/app/app-interface/reservation-interface';
 
 @Component({
   selector: 'app-reservation-crud',
@@ -23,10 +25,19 @@ export class ReservationCrudComponent extends Maintenance implements OnInit {
     private fb: FormBuilder,
     public route: ActivatedRoute,
     private restService: RestManagerService,
+    private router: Router
   ) {
     super();
     this.title = this.route.snapshot.data['title'];
     this.mode = this.route.snapshot.data['mode'];
+
+    if (this.mode !== 'create') {
+      this.route.queryParams
+        .subscribe(profile => {          
+            this.currentId = profile['id'];          
+        }
+      );
+    }
     this.initialize();
    }
 
@@ -34,10 +45,24 @@ export class ReservationCrudComponent extends Maintenance implements OnInit {
   }
 
   disableForm(): void {
-    throw new Error('Method not implemented.');
+    this.myForm.disable();
   }
   fillForm(): void {
-    throw new Error('Method not implemented.');
+    this.restService.getObjectById(REST.service.console, 'reservation', this.currentId.toString()).subscribe(
+      (response) => {
+        const reservation = (response as ReservationInterface);
+        this.myForm.setValue({
+          start: reservation.start,
+          end: reservation.end,
+          parking: reservation.parking.name,
+          vehicle : reservation.vehicle.brand + '-' + reservation.vehicle.line+'-'+reservation.vehicle.model+' '+reservation.vehicle.plate,
+          status: reservation.status.description
+        });
+        this.loading = false;
+      }, error => {
+        this.loading = false;
+        console.error(JSON.stringify(error));
+      });
   }
   create(): void {
     throw new Error('Method not implemented.');
@@ -46,7 +71,23 @@ export class ReservationCrudComponent extends Maintenance implements OnInit {
     throw new Error('Method not implemented.');
   }
   delete(): void {
-    throw new Error('Method not implemented.');
+    this.loading = true;
+    this.restService.deleteObjectById(REST.service.console, 'reservation', this.currentId.toString()).subscribe(
+      (response) => {
+        const reservation = (response as ReservationInterface);
+        this.myForm.setValue({
+          start: reservation.start,
+          end: reservation.end,
+          parking: reservation.parking.name,
+          vehicle : reservation.vehicle.brand + '-' + reservation.vehicle.line+'-'+reservation.vehicle.model+' '+reservation.vehicle.plate,
+          status: reservation.status.description
+        });
+        this.loading = false;
+        this.router.navigate(['reservation']);
+      }, error => {
+        this.loading = false;
+        console.error(JSON.stringify(error));
+      });
   }
   restore(): void {
     throw new Error('Method not implemented.');

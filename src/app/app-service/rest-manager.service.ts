@@ -67,7 +67,7 @@ export class RestManagerService {
      */
     public insertObject(rest: string, controller: string, object: any) {
         const headers = new HttpHeaders(this.customHeaders('json'));
-        return this.http.post(rest + controller + '/', JSON.stringify(object), {headers});
+        return this.http.post(rest + '/' + controller + '/', JSON.stringify(object), {headers});
     }
 
     /**
@@ -77,9 +77,9 @@ export class RestManagerService {
      * @param method metodo a invocar
      * @param id id del objeto que se desea eliminar
      */
-    public deleteObjectById(rest: string, controller: string, id: number) {
+    public deleteObjectById(rest: string, controller: string, id: string) {
         const headers = new HttpHeaders(this.customHeaders('json'));
-        return this.http.delete(rest + controller + '/' + id.toString(), {headers});
+        return this.http.delete(rest +  '/' + controller + '/' + id, {headers});
     }
 
     /**
@@ -90,9 +90,14 @@ export class RestManagerService {
      * @param id id del objeto que se desea modificar
      * @param object objeto con datos modificados
      */
-    public editObjectById(rest: string, controller: string, id: number, object: any) {
+    public editObjectById(rest: string, controller: string, id: string, object: any) {
         const headers = new HttpHeaders(this.customHeaders('json'));
-        return this.http.put(rest + controller + '/' + id.toString(), JSON.stringify(object), {headers});
+        return this.http.put(rest + '/'+ controller + '/' + id.toString(), JSON.stringify(object), {headers});
+    }
+
+    public restoreObjectById(rest: string, controller: string, id: string) {
+        const headers = new HttpHeaders(this.customHeaders('json'));
+        return this.http.patch(rest + '/'+ controller + '/' + id.toString(), {headers});
     }
 
     private getParametersWithValues(values: Map<string, string>): string{
@@ -104,6 +109,8 @@ export class RestManagerService {
         });
         return params;
     }
+
+
 
 }
   
